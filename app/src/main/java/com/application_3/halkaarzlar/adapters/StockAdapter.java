@@ -63,6 +63,7 @@ public class StockAdapter  extends  RecyclerView.Adapter<StockAdapter.myStockSho
     public void onBindViewHolder(@NonNull myStockShowDesign holder, int position) {
         Stock cStock = stocks.get(position);
         holder.designBinding.setStock(cStock);
+        holder.designBinding.Image.setImageResource(R.raw.back);
 
         holder.designBinding.allCard.setOnClickListener(new View.OnClickListener() {
             @Override

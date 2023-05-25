@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_purble">#242038</color>
+    <color name="state_blue">#725AC1</color>
+    <color name="Linen">#F7ECE1</color>
+
+
 </resources>

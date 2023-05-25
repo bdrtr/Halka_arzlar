@@ -21,7 +21,7 @@ public class DetailPrivateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_detail_private);
         activityDetailPrivateBinding = DataBindingUtil.setContentView(this,R.layout.activity_detail_private);
-
+        activityDetailPrivateBinding.gif.setImageResource(R.raw.arka2);
         //
         stock = (Stock) getIntent().getSerializableExtra("Stock");
         user = (User) getIntent().getSerializableExtra("user");
@@ -42,7 +42,8 @@ public class DetailPrivateActivity extends AppCompatActivity {
 
         for (int i=1;i<11;i++) {
             lot_price += lot_price/10;
-            text += i+".gün toplam ana para "+lot_count*lot_price+"tl  lot fiyatı "+lot_price+" tl KAR -> "+(lot_price-first_lot)*lot_count +" tl \n\n";
+            text += i+".gün toplam ana para "+Math.floor(lot_count*lot_price)+"tl \n"+
+                    "lot fiyatı "+Math.floor(lot_price)+" tl \n"+"KAR -> "+Math.floor((lot_price-first_lot)*lot_count) +" tl \n\n";
         }
 
         activityDetailPrivateBinding.resultText.setText(text);

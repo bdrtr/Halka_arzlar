@@ -3,7 +3,39 @@
     <style name="Base.Theme.HalkaArzlar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/dark_purble</item>
+        <item name="colorOnSecondary">@color/Linen</item>
+        <item name="color">@color/Linen</item>
+        <item name="colorAccent">@color/Linen</item>
+        <item name="android:textColor">@color/Linen</item>
+        <item name="actionMenuTextColor">@color/Linen</item>
     </style>
 
     <style name="Theme.HalkaArzlar" parent="Base.Theme.HalkaArzlar" />
+    <style name="Launcher" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
+
+    <style name="LauncherFullScreen">   <!-- PARENT ZORUNLU DEĞİL  -->
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="forgotPasswd" parent="@android:style/Theme.Holo.Dialog.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="EditText" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="colorAccent">@android:color/white</item>
+        <item name="android:textColorHint">#026c04</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlActivated">#FFD600</item>
+        <item name="colorControlHighlight">#026C04</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
 </resources>

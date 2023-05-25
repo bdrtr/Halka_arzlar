@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
         activityMainBinding.toolbar.setTitle("Bilgi sayfası");
         activityMainBinding.toolbar.setSubtitle("hisseler");
+        activityMainBinding.toolbar.setTitleTextColor(getColor(R.color.Linen));
+        activityMainBinding.toolbar.setSubtitleTextColor(getColor(R.color.Linen));
 
         setSupportActionBar(activityMainBinding.toolbar);
         myRunnable = new GetVeriablesStock(this);

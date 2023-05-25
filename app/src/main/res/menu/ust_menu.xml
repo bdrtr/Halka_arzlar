@@ -15,7 +15,7 @@
         android:title="@string/login" />
     <item
         android:id="@+id/exit_account"
-        android:icon="@android:drawable/ic_lock_power_off"
+        android:icon="@drawable/baseline_power_settings_new_24"
         android:title="@string/update"
         app:showAsAction="always" />
 </menu>
