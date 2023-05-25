@@ -25,8 +25,8 @@ public class MainViewmodel extends ViewModel {
         this.stockDatas = stockRepo.returnStockDatas();
     }
 
-    public MutableLiveData<List<Stock>> returnStocks() {
-        return stockDatas;
+    public List<Stock> returnStocks() {
+        return stockDatas.getValue();
     }
 
     public void update(ArrayList<Stock> stocks) {

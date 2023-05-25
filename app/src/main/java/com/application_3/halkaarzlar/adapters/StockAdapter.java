@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application_3.halkaarzlar.R;
 import com.application_3.halkaarzlar.activities.DetailActivity;
+import com.application_3.halkaarzlar.activities.DetailPrivateActivity;
 import com.application_3.halkaarzlar.databinding.StockShowBinding;
 import com.application_3.halkaarzlar.objects.Stock;
+import com.application_3.halkaarzlar.objects.User;
 
 import java.util.List;
 
@@ -21,10 +23,22 @@ public class StockAdapter  extends  RecyclerView.Adapter<StockAdapter.myStockSho
 
     public Context cnt;
     public List<Stock> stocks;
+    public List<Stock> filter;
 
-    public StockAdapter (Context cnt, List<Stock> stocks) {
+    private User user;
+    public StockAdapter (Context cnt, List<Stock> stocks, User user) {
         this.cnt = cnt;
         this.stocks = stocks;
+        this.user = user;
+    }
+
+    public void filter(List<Stock> st) {
+        filter.clear();
+        this.stocks = st;
+        notifyDataSetChanged();
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public class myStockShowDesign extends RecyclerView.ViewHolder {
@@ -53,10 +67,18 @@ public class StockAdapter  extends  RecyclerView.Adapter<StockAdapter.myStockSho
         holder.designBinding.allCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(cnt, DetailActivity.class);
-                i.putExtra("Stock",cStock);
-                cnt.startActivity(i);
 
+                if (user.getId() >= 0) {
+                    Intent i = new Intent(cnt, DetailPrivateActivity.class);
+                    i.putExtra("Stock",cStock);
+                    i.putExtra("user",user);
+                    cnt.startActivity(i);
+
+                } else {
+                    Intent i = new Intent(cnt, DetailActivity.class);
+                    i.putExtra("Stock",cStock);
+                    cnt.startActivity(i);
+                }
                 //detail page geçiş
             }
         });

@@ -1,13 +1,10 @@
 package com.application_3.halkaarzlar.connects;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.ArraySet;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.annotation.NonNull;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,26 +20,26 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.jar.Attributes;
+import java.util.TimerTask;
 
-public class GetVeriablesStock  {
-
+public class GetVeriablesStock extends TimerTask {
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
     private String URL = "https://halkarz.com/";
 
     private Context cnt;
-    public String Res;
+    public ArrayList<Stock> array;
     public ArrayList<String> Links;
     private Stock tempStock;
 
-    public GetVeriablesStock(Context cnt) {
-        this.cnt = cnt;
+    public GetVeriablesStock(@NonNull Context context) {
+        this.cnt = context;
         this.Links = new ArrayList<>();
-        requestQueue = Volley.newRequestQueue(cnt);
+        this.array = new ArrayList<>();
+        requestQueue = Volley.newRequestQueue(context);
     }
+
+
     public void getURL() {
         stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
@@ -56,17 +53,20 @@ public class GetVeriablesStock  {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(cnt,"hata",Toast.LENGTH_SHORT).show();
+                Log.i("----","linkde hata");
             }
         });
 
         requestQueue.add(stringRequest);
+
     }
 
-    public ArrayList<Stock> getStocks() {
-        ArrayList<Stock> array = new ArrayList<>();
-        for (int i=5;i<10;i++) {
+    public void getStocks() {
+        this.array.clear();
+
+        for (int i=5;i<30;i+=2) {
             String url = this.Links.get(i);
+
             stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -74,23 +74,73 @@ public class GetVeriablesStock  {
                     Elements codeName = doc.select("h2");
                     Elements name = doc.select("h1.il-halka-arz-sirket");
                     String dateT = doc.select("time").attr("datetime");
-                    Elements elem = doc.select("strong");
 
-                    tempStock = new Stock(name.text(),elem.get(0).text(),1.2,codeName.text(),dateT,elem.get(1).text(),
-                            elem.get(6).text(),codeName.text(),elem.get(8).text());
+
+                    Element halkaArzFiyatiElement = doc.select("td:has(em:contains(Halka Arz Fiyatı/Aralığı)) + td strong").first();
+                    String halkaArzFiyati = halkaArzFiyatiElement.text();
+
+                    Element dagitimYontemiElement = doc.select("td:has(em:contains(Dağıtım Yöntemi)) + td strong").first();
+                    String dagitimYontemi = dagitimYontemiElement.text();
+
+                    /*
+                    Element payElement = doc.select("td:has(em:contains(Pay)) + td strong").first();
+                    String pay = payElement.text();
+
+                    Element ekPayElement = doc.select("td:has(em:contains(Ek Pay)) + td strong").first();
+                    String ekPay = ekPayElement.text();
+
+
+                    Element araciKurumElement = doc.select("td:has(em:contains(Aracı Kurum)) + td strong").first();
+                    String araciKurum = araciKurumElement.text();
+
+                    /*
+                    Element fiiliDolasimdakiPayElement = doc.select("td:has(em:contains(Fiili Dolaşımdaki Pay)) + td strong").first();
+                    String fiiliDolasimdakiPay = fiiliDolasimdakiPayElement.text();
+                    /*
+
+                     */
+
+                    Element fiiliDolasimdakiPayOraniElement = doc.select("td:has(em:contains(Fiili Dolaşımdaki Pay Oranı)) + td strong").first();
+                    String fiiliDolasimdakiPayOrani = fiiliDolasimdakiPayOraniElement.text();
+
+                    /*
+                    Element bistKoduElement = doc.select("td:has(em:contains(Bist Kodu)) + td strong").first();
+                    String bistKodu = bistKoduElement.text();
+
+                     */
+                    Element pazarElement = doc.select("td:has(em:contains(Pazar)) + td strong").first();
+                    String pazar = pazarElement.text();
+
+                    /*
+                    Element bistIlkIslemTarihiElement = doc.select("td:has(em:contains(Bist İlk İşlem Tarihi)) + td strong").first();
+                    String bistIlkIslemTarihi = bistIlkIslemTarihiElement.text();
+
+                     */
+                    tempStock = new Stock(name.text(),halkaArzFiyati,"-",codeName.text(),
+                            dateT,dagitimYontemi,fiiliDolasimdakiPayOrani,codeName.text(),pazar);
+
                     array.add(tempStock);
+
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.i("----","baglanti hatasi");
+                    Log.i("----","veri çekerken hata");
                 }
             });
 
             requestQueue.add(stringRequest);
         }
-        return array;
 
+    }
+
+    public ArrayList<Stock> returnStockList() {
+        return this.array;
+    }
+
+    @Override
+    public void run() {
+        getStocks();
     }
 
 }

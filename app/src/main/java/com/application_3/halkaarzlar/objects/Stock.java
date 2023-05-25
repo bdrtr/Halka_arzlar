@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Stock implements Serializable {
     private String name;
     private String  pop;
-    private double current_price;
+    private String target_price;
     private String id;
     private String date;
     private String plan;
@@ -14,10 +14,10 @@ public class Stock implements Serializable {
     private String bazaar;
 
 
-    public Stock(String name, String pop, double current_price, String id, String date, String plan, String share_rate, String name_code, String bazaar) {
+    public Stock(String name, String pop, String target_price, String id, String date, String plan, String share_rate, String name_code, String bazaar) {
         this.name = name;
         this.pop = pop;
-        this.current_price = current_price;
+        this.target_price = target_price;
         this.id = id;
         this.date = date;
         this.plan = plan;
@@ -42,12 +42,12 @@ public class Stock implements Serializable {
         this.pop = pop;
     }
 
-    public double getCurrent_price() {
-        return current_price;
+    public String getCurrent_price() {
+        return target_price;
     }
 
-    public void setCurrent_price(float current_price) {
-        this.current_price = current_price;
+    public void setCurrent_price(String target_price) {
+        this.target_price = target_price;
     }
 
     public String getId() {
@@ -96,5 +96,11 @@ public class Stock implements Serializable {
 
     public void setBazaar(String bazaar) {
         this.bazaar = bazaar;
+    }
+
+    public String getPOPDouble() {
+        String[] str  = pop.split(" ");
+        String[] temp_text = str[0].split(",");
+        return temp_text[0]+"."+temp_text[1];
     }
 }

@@ -14,7 +14,8 @@
         android:id="@+id/account_login"
         android:title="@string/login" />
     <item
-        app:showAsAction="always"
-        android:id="@+id/update_veriables"
-        android:title="@string/update" />
+        android:id="@+id/exit_account"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="@string/update"
+        app:showAsAction="always" />
 </menu>
