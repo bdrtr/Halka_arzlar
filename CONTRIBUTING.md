@@ -1,6 +1,6 @@
 # Halka Arzlar
 
-- Uygulama geliştirmeye hızlı bir giriş için ön bakış. Lütfen sorunları çözmekle vakit harcamıyacaksanız _geliştirici kuralları_ bölümüne göz atın.
+- Uygulama geliştirmeye hızlı bir giriş için ön bakış. Lütfen sorunları çözmekle vakit harcamıyacaksanız  [geliştirici kuralları](https://github.com/bdrtr/Halka_arzlar/blob/main/CONTRIBUTING.md#geli%C5%9Ftirici-kurallar%C4%B1) bölümüne göz atın.
 
 - 1-) Java 
 - 2-) MVVM 
