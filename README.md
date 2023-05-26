@@ -1,3 +1,4 @@
+![Logo](https://user-images.githubusercontent.com/69633060/241176083-b9e5335a-32c2-4aac-9a25-9b1ebf1ea9e3.png)
 
 # Halka Arzlar
 
