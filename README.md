@@ -11,7 +11,7 @@ Güncel harka arzları takip etmeyi kolaylaştırmak ve yaklaşık pay kar hesab
 
 Katkılara her zaman açığız!
 
-Başlamak `Contributor.md'ye bakın.
+Başlamak için '[Contributor.md](https://github.com/bdrtr/Halka_arzlar/blob/main/CONTRIBUTING.md)' ye bakın.
 
 Lütfen bu projenin `davranış kurallarına` uyun.
 
