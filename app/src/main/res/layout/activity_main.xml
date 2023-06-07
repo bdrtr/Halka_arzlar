@@ -19,6 +19,7 @@
     tools:context=".activities.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:onClick="@{() -> objectMain.loadDatas()}"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
         android:id="@+id/recycler_view_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="57dp"
         android:adapter="@{adapter}"
         android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

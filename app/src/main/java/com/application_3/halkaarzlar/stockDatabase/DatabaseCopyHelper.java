@@ -17,7 +17,7 @@ public class DatabaseCopyHelper extends SQLiteOpenHelper  {
 	//The Android's default system path of your application database.
 	String DB_PATH =null;
 
-	private static String DB_NAME = "StockBase2.sqlite";
+	private static String DB_NAME = "StockBase3.sqlite";
 
 	private SQLiteDatabase myDataBase;
 

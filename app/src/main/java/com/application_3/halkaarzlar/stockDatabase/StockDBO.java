@@ -3,6 +3,7 @@ package com.application_3.halkaarzlar.stockDatabase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.application_3.halkaarzlar.objects.Stock;
 
@@ -28,6 +29,7 @@ public class StockDBO {
                     c.getString(c.getColumnIndexOrThrow("name_code")),
                     c.getString(c.getColumnIndexOrThrow("bazaar")));
 
+            mStock.setImgPic(c.getString(c.getColumnIndexOrThrow("picture_url")));
             stocks.add(mStock);
         }
         dbx.close();
@@ -40,25 +42,26 @@ public class StockDBO {
         dbx.close();
     }
 
-    public void AddList(DBHelper vt, ArrayList<Stock> stock, ArrayList<Stock> lastStock) {
+    public void AddList(DBHelper vt, ArrayList<Stock> stock) {
 
+        boolean addFlag = true;
 
-        SQLiteDatabase dbx = vt.getWritableDatabase();
-        ContentValues values = new ContentValues();
+        //data basede var olan değerler güncellensin yoksa yeni değerler oluşturulsun
+
+        ArrayList<Stock> alreadyThere = getAllStocks(vt);
         for (int i=0;i<stock.size();i++) {
-            values.put("name",stock.get(i).getName());
-            values.put("pop",stock.get(i).getPop());
-            values.put("target_price",stock.get(i).getCurrent_price());
-            values.put("stock_id",stock.get(i).getId());
-            values.put("date",stock.get(i).getDate());
-            values.put("plan",stock.get(i).getPlan());
-            values.put("share_rate",stock.get(i).getShare_rate());
-            values.put("name_code",stock.get(i).getName_code());
-            values.put("bazaar",stock.get(i).getBazaar());
+            addFlag = true; //bu değer database eklencek
 
-            dbx.insertOrThrow("Stocks",null,values);
+            for (int j=0;j<alreadyThere.size();j++) {
+
+                if (stock.get(i).getId().equals(alreadyThere.get(j).getId())) {
+                    Update(vt,stock.get(i),alreadyThere.get(j).getId());
+                    addFlag = false; // zaten varmış eklenmiycek
+                }
+            }
+            if (addFlag)
+                Add(vt,stock.get(i));
         }
-        dbx.close();
     }
 
     public void Add(DBHelper vt, Stock stock) {
@@ -74,6 +77,7 @@ public class StockDBO {
         values.put("plan",stock.getPlan());
         values.put("share_rate",stock.getShare_rate());
         values.put("name_code",stock.getName_code());
+        values.put("picture_url",stock.getImgPic());
         values.put("bazaar",stock.getBazaar());
 
         dbx.insertOrThrow("Stocks",null,values);
@@ -92,6 +96,7 @@ public class StockDBO {
         values.put("plan",stock.getPlan());
         values.put("share_rate",stock.getShare_rate());
         values.put("name_code",stock.getName_code());
+        values.put("picture_url",stock.getImgPic());
         values.put("bazaar",stock.getBazaar());
 
         dbx.update("Stocks",values,"stock_id=?",new String[]{id});

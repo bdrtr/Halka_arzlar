@@ -46,6 +46,9 @@ public class LoginActivity extends AppCompatActivity {
     }
     public boolean Login() {
 
+        if (UserName().equals("") || Password().equals("")) {
+            Toast.makeText(getApplicationContext(),"boş bırakılan alan mevcut !",Toast.LENGTH_SHORT).show();
+        }
         User user = new User(0,UserName(),Password());
         if (new UserDBO().LOGIN(vt,user)) {
             Intent i = new Intent(this,MainActivity.class);

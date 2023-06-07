@@ -11,6 +11,7 @@ import com.application_3.halkaarzlar.R;
 import com.application_3.halkaarzlar.databinding.ActivityDetailBinding;
 import com.application_3.halkaarzlar.objects.Stock;
 import com.application_3.halkaarzlar.viewholders.DetailViewmodel;
+import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -24,5 +25,8 @@ public class DetailActivity extends AppCompatActivity {
         activityDetailBinding = DataBindingUtil.setContentView(this,R.layout.activity_detail);
         Stock stock = (Stock) getIntent().getSerializableExtra("Stock");
         activityDetailBinding.setStockObject(stock);
+        Picasso.get()
+                .load(stock.getImgPic())
+                .into(activityDetailBinding.Logodetail);
     }
 }

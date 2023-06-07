@@ -72,10 +72,16 @@ public class GetVeriablesStock extends TimerTask {
                 public void onResponse(String response) {
                     Document doc = Jsoup.parse(response);
                     Elements codeName = doc.select("h2");
+                    Element _demand = doc.selectFirst(".il-tt");
+                    String demand;
+                    if (_demand != null)
+                        demand = "* talep toplanıyor";
+                    else
+                        demand = "";
                     Elements name = doc.select("h1.il-halka-arz-sirket");
                     String dateT = doc.select("time").attr("datetime");
-
-
+                    String getLogo = doc.selectFirst("img").attr("src");
+                    //Log.i("----",getLogo);
                     Element halkaArzFiyatiElement = doc.select("td:has(em:contains(Halka Arz Fiyatı/Aralığı)) + td strong").first();
                     String halkaArzFiyati = halkaArzFiyatiElement.text();
 
@@ -99,9 +105,13 @@ public class GetVeriablesStock extends TimerTask {
                     /*
 
                      */
-
+                    String fiiliDolasimdakiPayOrani;
                     Element fiiliDolasimdakiPayOraniElement = doc.select("td:has(em:contains(Fiili Dolaşımdaki Pay Oranı)) + td strong").first();
-                    String fiiliDolasimdakiPayOrani = fiiliDolasimdakiPayOraniElement.text();
+                    if (fiiliDolasimdakiPayOraniElement != null)
+                        fiiliDolasimdakiPayOrani = fiiliDolasimdakiPayOraniElement.text();
+                    else
+                        fiiliDolasimdakiPayOrani = "pay oranı henüz belli değil";
+
 
                     /*
                     Element bistKoduElement = doc.select("td:has(em:contains(Bist Kodu)) + td strong").first();
@@ -116,8 +126,9 @@ public class GetVeriablesStock extends TimerTask {
                     String bistIlkIslemTarihi = bistIlkIslemTarihiElement.text();
 
                      */
-                    tempStock = new Stock(name.text(),halkaArzFiyati,"-",codeName.text(),
+                    tempStock = new Stock(name.text(),halkaArzFiyati,demand,codeName.text(),
                             dateT,dagitimYontemi,fiiliDolasimdakiPayOrani,codeName.text(),pazar);
+                    tempStock.setImgPic(getLogo);
 
                     array.add(tempStock);
 

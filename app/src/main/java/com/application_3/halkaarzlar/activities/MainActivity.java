@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        currentUser = new User(-1,"def","def");
+        //setContentView(R.layout.activity_main); //databinding kullanılıdıgı icin iptal edildi
+        currentUser = new User(-1,"def","def"); // o anki kullanıcı misafir
         //
         //
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -85,8 +85,10 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
     public void loadDatas() {
         ArrayList<Stock> stc = myRunnable.returnStockList();
-        dbo.AddList(vt,stc,(ArrayList<Stock>) mainViewmodel.returnStocks());
+        dbo.AddList(vt,stc);
         mainViewmodel.update(dbo.getAllStocks(vt));
+        //dbo.DelALL(vt);
+        Toast.makeText(getApplicationContext(),"guncellendi",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -102,6 +104,10 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             return true;
         }
         else if (item.getItemId() == R.id.exit_account) {
+            if (currentUser.getId() == -1) {
+                Toast.makeText(getApplicationContext(),"zaten bir hesap açık değil",Toast.LENGTH_SHORT).show();
+                return true;
+            }
             currentUser = new User(-1,"guest","guest");
             adapter.setUser(currentUser);
             Toast.makeText(getApplicationContext(),"hesaptan çıkıldı",Toast.LENGTH_SHORT).show();
@@ -138,9 +144,10 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     public void ConnectnUpdate() {
         tmr = new Timer();
         long delay = 1000*10;
-        long period = 1000*10;
+        long period = 1000*60;
         myRunnable.getURL();
-        tmr.scheduleAtFixedRate(myRunnable,delay,period);
+        tmr.scheduleAtFixedRate(myRunnable,delay,period); //her bir dakikada bir linkler güncellenir
+        //dbo.DelALL(vt);
     }
 
     public void Refresh() {
@@ -156,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         });
     }
 
-    public void userVeri() {
+    public void userData() {
         currentUser = new User(getIntent().getIntExtra("id",-1)
                 ,getIntent().getStringExtra("user"),getIntent().getStringExtra("pass"));
     }
@@ -170,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     @Override
     protected void onResume() {
         super.onResume();
-        userVeri();
+        userData();
         adapter.setUser(currentUser);
         Log.i("----","current user name: "+currentUser.getId());
     }

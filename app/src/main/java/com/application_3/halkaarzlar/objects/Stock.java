@@ -13,6 +13,8 @@ public class Stock implements Serializable {
     private String name_code;
     private String bazaar;
 
+    private String imgPic;
+
 
     public Stock(String name, String pop, String target_price, String id, String date, String plan, String share_rate, String name_code, String bazaar) {
         this.name = name;
@@ -102,5 +104,13 @@ public class Stock implements Serializable {
         String[] str  = pop.split(" ");
         String[] temp_text = str[0].split(",");
         return temp_text[0]+"."+temp_text[1];
+    }
+
+    public String getImgPic() {
+        return imgPic;
+    }
+
+    public void setImgPic(String picture) {
+        this.imgPic = picture;
     }
 }

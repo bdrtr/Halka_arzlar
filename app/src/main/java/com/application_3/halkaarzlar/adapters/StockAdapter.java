@@ -2,9 +2,11 @@ package com.application_3.halkaarzlar.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -16,6 +18,8 @@ import com.application_3.halkaarzlar.activities.DetailPrivateActivity;
 import com.application_3.halkaarzlar.databinding.StockShowBinding;
 import com.application_3.halkaarzlar.objects.Stock;
 import com.application_3.halkaarzlar.objects.User;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import java.util.List;
 
@@ -64,7 +68,10 @@ public class StockAdapter  extends  RecyclerView.Adapter<StockAdapter.myStockSho
         Stock cStock = stocks.get(position);
         holder.designBinding.setStock(cStock);
         holder.designBinding.Image.setImageResource(R.raw.back);
-
+        Picasso.get()
+                .load(cStock.getImgPic())
+                .into(holder.designBinding.Logo);
+        //Log.i("----",cStock.getImgPic());
         holder.designBinding.allCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
