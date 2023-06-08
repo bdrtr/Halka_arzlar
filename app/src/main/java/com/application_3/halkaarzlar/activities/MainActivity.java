@@ -1,5 +1,11 @@
 package com.application_3.halkaarzlar.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -7,27 +13,17 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.Toast;
-
-import com.application_3.halkaarzlar.objects.User;
-import com.application_3.halkaarzlar.stockDatabase.DBHelper;
-import com.application_3.halkaarzlar.stockDatabase.StockDBO;
 import com.application_3.halkaarzlar.R;
 import com.application_3.halkaarzlar.adapters.StockAdapter;
 import com.application_3.halkaarzlar.connects.GetVeriablesStock;
 import com.application_3.halkaarzlar.databinding.ActivityMainBinding;
 import com.application_3.halkaarzlar.objects.Stock;
+import com.application_3.halkaarzlar.objects.User;
+import com.application_3.halkaarzlar.stockDatabase.DBHelper;
+import com.application_3.halkaarzlar.stockDatabase.StockDBO;
 import com.application_3.halkaarzlar.viewholders.MainViewmodel;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements LifecycleOwner {
@@ -100,7 +96,10 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.account_login) {
-            startActivity(new Intent(this,LoginActivity.class));
+            if (currentUser.getId() == -1)
+                startActivity(new Intent(this,LoginActivity.class));
+            else
+                Toast.makeText(getApplicationContext(),"önce hesabınızdan çıkış yapınız. ",Toast.LENGTH_SHORT).show();
             return true;
         }
         else if (item.getItemId() == R.id.exit_account) {
@@ -113,31 +112,18 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
             Toast.makeText(getApplicationContext(),"hesaptan çıkıldı",Toast.LENGTH_SHORT).show();
             return true;
         }
-        else if (item.getItemId() == R.id.app_search) {
-            SearchView sc = findViewById(R.id.app_search);
-            sc.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    List<Stock> st = new ArrayList<>();
-                    for (Stock s: myRunnable.returnStockList()) {
-                        if (s.getId().contains(query.toUpperCase())) {{
-                            st.add(s);
-                        }}
-                    }
-                    adapter.filter(st);
-
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    //adapter.filter(newText);
-                    return true;
-                }
-            });
-            //adapter.filter(activityMainBinding.)
+        else if (item.getItemId() == R.id.next_page) {
+            if (currentUser.getId() == -1 ) {
+                Toast.makeText(getApplicationContext(),"sadece kayıtlı kullanıcılar. ",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            Intent myInt = new Intent(getApplicationContext(),LogInsideActivity.class);
+            myInt.putExtra("userData",currentUser);
+            startActivity(myInt);
+            return true;
         }
-        return false;
+
+        return true;
     }
 
 
@@ -166,6 +152,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
     public void userData() {
         currentUser = new User(getIntent().getIntExtra("id",-1)
                 ,getIntent().getStringExtra("user"),getIntent().getStringExtra("pass"));
+
+        User tempUser =  (User) getIntent().getSerializableExtra("userData");
+
+        if (tempUser != null)
+            currentUser = tempUser;
+
     }
 
     @Override
@@ -179,6 +171,6 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         super.onResume();
         userData();
         adapter.setUser(currentUser);
-        Log.i("----","current user name: "+currentUser.getId());
+
     }
 }

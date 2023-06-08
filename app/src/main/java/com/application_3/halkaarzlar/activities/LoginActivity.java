@@ -49,13 +49,19 @@ public class LoginActivity extends AppCompatActivity {
         if (UserName().equals("") || Password().equals("")) {
             Toast.makeText(getApplicationContext(),"boş bırakılan alan mevcut !",Toast.LENGTH_SHORT).show();
         }
-        User user = new User(0,UserName(),Password());
+        User user = new User(1,UserName(),Password());
         if (new UserDBO().LOGIN(vt,user)) {
-            Intent i = new Intent(this,MainActivity.class);
+            Intent i = new Intent(this,LogInsideActivity.class);
+            /*
             i.putExtra("id",1);
             i.putExtra("user",user.getName());
             i.putExtra("pass",user.getPasswd());
+
+             */
+            i.putExtra("userData",user);
             startActivity(i);
+
+
             return true;
         }
 

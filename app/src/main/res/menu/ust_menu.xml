@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/app_search"
-        android:icon="@drawable/ic_search_black_24dp"
+        android:id="@+id/next_page"
+        android:icon="@drawable/baseline_content_paste_go_24"
         android:title="@string/search"
         android:visible="true"
-        app:actionViewClass="android.widget.SearchView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always" />
     <item
         app:showAsAction="always"

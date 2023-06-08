@@ -76,7 +76,7 @@ public class StockAdapter  extends  RecyclerView.Adapter<StockAdapter.myStockSho
             @Override
             public void onClick(View v) {
 
-                if (user.getId() >= 0) {
+                if (user.getId() >= 1) {
                     Intent i = new Intent(cnt, DetailPrivateActivity.class);
                     i.putExtra("Stock",cStock);
                     i.putExtra("user",user);

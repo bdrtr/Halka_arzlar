@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/fragment_calculate"
+        android:icon="@drawable/baseline_attach_money_24"
+        android:title="calculate_screen"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/fragment_comment"
+        android:icon="@drawable/baseline_mode_comment_24"
+        android:title="ccomment_screen"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/fragment_person"
+        android:icon="@drawable/baseline_person_pin_24"
+        android:title="person_screen"
+        app:showAsAction="always" />
 </menu>
