@@ -122,10 +122,12 @@ public class GetVeriablesStock extends TimerTask {
                     String pazar = pazarElement.text();
 
                     /*
+
+                     */
                     Element bistIlkIslemTarihiElement = doc.select("td:has(em:contains(Bist İlk İşlem Tarihi)) + td strong").first();
                     String bistIlkIslemTarihi = bistIlkIslemTarihiElement.text();
 
-                     */
+
                     tempStock = new Stock(name.text(),halkaArzFiyati,demand,codeName.text(),
                             dateT,dagitimYontemi,fiiliDolasimdakiPayOrani,codeName.text(),pazar);
                     tempStock.setImgPic(getLogo);
@@ -148,10 +150,11 @@ public class GetVeriablesStock extends TimerTask {
     public ArrayList<Stock> returnStockList() {
         return this.array;
     }
-
     @Override
     public void run() {
-        getStocks();
+        //getStocks();
     }
+
+
 
 }
